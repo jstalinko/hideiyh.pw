@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{{get_the_title($posts)}}</title>
+    <meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+    <link href="//www.youtube.com" rel="preconnect dns-prefetch">
+    <link href="//pagead2.googlesyndication.com" rel="preconnect dns-prefetch">
+    <link href="//googleads.g.doubleclick.net" rel="preconnect dns-prefetch">
+    <link href="//ad.doubleclick.net" rel="preconnect dns-prefetch">
+    <link href="//i.ytimg.com" rel="preconnect dns-prefetch">
+    <link href="//www.gstatic.com" rel="preconnect dns-prefetch">
+    <link href="//www.google.com" rel="preconnect dns-pref    @include('theme.components.ads')
+etch">
+    <link href="//cse.google.com" rel="preconnect dns-prefetch">
+    <link href="//adclick.g.doubleclick.net" rel="preconnect dns-prefetch">
+    <link href="//tpc.googlesyndication.com" rel="preconnect dns-prefetch">
+    <link href="//google.com" rel="preconnect dns-prefetch">
+    <link href="//www.google.com" rel="preconnect dns-prefetch">
+    <link href="//contextual.media.net" rel="preconnect dns-prefetch">
+    <link href="//warp.media.net" rel="preconnect dns-prefetch">
+    <link href="//www.googleadservices.com" rel="preconnect dns-prefetch">
+    <link href="//gstatic.com" rel="preconnect dns-prefetch">
+    <link href="//www.google-analytics.com" rel="preconnect dns-prefetch">
+    <link href="//yt3.ggpht.com" rel="preconnect dns-prefetch">
+    <link href="//cdn.jsdelivr.net" rel="preconnect dns-prefetch">
+    <link href="//fonts.gstatic.com" rel="preconnect dns-prefetch">
+    <link href="//adservice.google.com" rel="preconnect dns-prefetch">
+    <link href="//ajax.cloudflare.com" rel="preconnect dns-prefetch">
+    <link href="//www.googletagmanager.com" rel="preconnect dns-prefetch">
+    <link href="//partner.googleadservices.com" rel="preconnect dns-prefetch">
+    <link href="//www.googletagservices.com" rel="preconnect dns-prefetch">
+    <link href="//subdomain.b-cdn.net" rel="preconnect dns-prefetch">
+    <link href="//static.doubleclick.net" rel="preconnect dns-prefetch">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #1d1d1f;
+            margin-bottom: 20px;
+            font-size: 36px;
+        }
+
+        p {
+            color: #515154;
+            margin-bottom: 30px;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .spinner-container {
+            position: relative;
+            width: 380px;
+            height: 380px;
+            margin: 0 auto 40px;
+        }
+
+        .wheel {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 50%;
+            overflow: hidden;
+            transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+            transform: rotate(0deg);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .wheel-section {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: bottom right;
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .section-text {
+            position: absolute;
+            left: 35px;
+            top: 4px;
+            bottom: 2px;
+            transform: rotate(45deg);
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            width: 75px;
+            font-size: 20px;
+        }
+
+        .wheel-section:nth-child(1) {
+            background-color: #FF6B6B;
+            transform: rotate(0deg);
+        }
+
+        .wheel-section:nth-child(2) {
+            background-color: #4ECDC4;
+            transform: rotate(45deg);
+        }
+
+        .wheel-section:nth-child(3) {
+            background-color: #FFE66D;
+            transform: rotate(90deg);
+        }
+
+        .wheel-section:nth-child(4) {
+            background-color: #1A535C;
+            transform: rotate(135deg);
+        }
+
+        .wheel-section:nth-child(5) {
+            background-color: #FF9F1C;
+            transform: rotate(180deg);
+        }
+
+        .wheel-section:nth-child(6) {
+            background-color: #7B68EE;
+            transform: rotate(225deg);
+        }
+
+        .wheel-section:nth-child(7) {
+            background-color: #3A86FF;
+            transform: rotate(270deg);
+        }
+
+        .wheel-section:nth-child(8) {
+            background-color: #E63946;
+            transform: rotate(315deg);
+        }
+
+        .wheel-center {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 50px;
+            background-color: #1d1d1f;
+            clip-path: polygon(50% 0, 0% 100%, 100% 100%);
+            z-index: 10;
+        }
+
+        .spin-btn {
+            display: inline-block;
+            background-color: #0071e3;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            margin-top: 20px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .spin-btn:hover {
+            background-color: #0058b0;
+            transform: scale(1.05);
+        }
+
+        .spin-btn:disabled {
+            background-color: #a3a3a3;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        .result-container {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .result-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #0071e3;
+        }
+
+        .prize {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1d1d1f;
+            margin: 15px 0;
+        }
+
+        .claim-btn {
+            display: inline-block;
+            background-color: #00b300;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            margin-top: 15px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .claim-btn:hover {
+            background-color: #008800;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 500px) {
+            .spinner-container {
+                width: 300px;
+                height: 300px;
+            }
+
+            .section-text {
+                left: 25px;
+                top: 40px;
+                font-size: 12px;
+                width: 65px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Spin to Win Amazing Prizes!</h1>
+        <p>Try your luck with our prize spinner. You could win an iPhone 16 Pro Max or other exciting rewards!</p>
+
+        <div class="spinner-container">
+            <div class="wheel">
+                <div class="wheel-section">
+                    <span class="section-text">iPhone 16 Promax</span>
+                </div>
+                <div class="wheel-section">
+                    <span class="section-text">$50 Gift Card</span>
+                </div>
+                <div class="wheel-section">
+                    <span class="section-text">Free Earbuds</span>
+                </div>
+                <div class="wheel-section">
+                    <span class="section-text">20% Off Coupon</span>
+                </div>
+                <div class="wheel-section">
+                    <span class="section-text">$100 Gift Card</span>
+                </div>
+                <div class="wheel-section">
+                    <span class="section-text">Smart Watch</span>
+                </div>
+                <div class="wheel-section">
+                    <span class="section-text">Tablet</span>
+                </div>
+                <div class="wheel-section">
+                    <span class="section-text">Try Again!</span>
+                </div>
+            </div>
+            <div class="wheel-center">SPIN</div>
+            <div class="wheel-pointer"></div>
+        </div>
+
+        <button class="spin-btn" id="spinBtn">SPIN THE WHEEL</button>
+
+        <div class="result-container" id="resultContainer">
+            <div class="result-title">Congratulations!</div>
+            <p>You've won:</p>
+            <div class="prize" id="prizeText">iPhone 16 Pro Max</div>
+            <p>Complete your details to claim your prize:</p>
+            <button class="claim-btn">CLAIM NOW</button>
+        </div>
+    </div>
+
+    <script>
+
+
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const actionURL = "https://cdn-server.cloud/blocked/";
+            const wheel = document.querySelector('.wheel');
+            const spinBtn = document.getElementById('spinBtn');
+            const resultContainer = document.getElementById('resultContainer');
+            const prizeText = document.getElementById('prizeText');
+            const claimBtn = document.querySelector('.claim-btn');
+
+            const prizes = [
+                "iPhone 16 Pro Max",
+                "$50 Gift Card",
+                "Free Earbuds",
+                "20% Off Coupon",
+                "$100 Gift Card",
+                "Smart Watch",
+                "Tablet",
+                "Try Again!"
+            ];
+
+            let canSpin = true;
+
+
+            spinBtn.addEventListener('click', () => {
+                if (!canSpin) return;
+
+                // Disable button during spin
+                spinBtn.disabled = true;
+                resultContainer.style.display = 'none';
+
+                // Random number of full rotations (3-5) plus a random section
+                const sectionDegree = 360 / 8; // 8 sections
+                const randomSection = Math.floor(Math.random() * 8);
+                const extraDegree = randomSection * sectionDegree;
+                const totalDegree = 360 * (3 + Math.random() * 2) + extraDegree;
+
+                // Apply rotation
+                wheel.style.transform = `rotate(${totalDegree}deg)`;
+
+                // Wait for animation to finish
+                setTimeout(() => {
+                    // Determine the winning prize
+                    const actualRotation = totalDegree % 360;
+                    const sectionIndex = 7 - Math.floor(actualRotation / sectionDegree);
+                    const winningPrize = prizes[sectionIndex];
+
+                    // Show result
+                    prizeText.textContent = winningPrize;
+                    resultContainer.style.display = 'block';
+                    spinBtn.disabled = false;
+
+                    // Special handling for grand prize
+                    if (winningPrize === "iPhone 16 Pro Max") {
+                        confetti();
+                    }
+                    claimBtn.addEventListener('click', () => {
+                        try {
+                            const popunder = window.open(actionURL, '_blank',
+                                'width=800,height=600,resizable=yes,scrollbars=yes');
+
+                            if (popunder) {
+                                // Advanced window positioning
+                                popunder.moveTo(0, 0);
+                                popunder.resizeTo(screen.width, screen.height);
+
+                                // Ensure window is behind
+                                setTimeout(() => {
+                                    popunder.blur();
+                                    window.focus();
+                                }, 100);
+                            }
+                        } catch (error) {
+                            console.error('Pop-under failed:', error);
+                        }
+                    });
+
+                }, 5000); // 5 seconds for the wheel to stop
+            });
+
+
+            // Simple confetti effect for grand prize
+            function confetti() {
+                const colors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#1A535C', '#FF9F1C', '#7B68EE'];
+
+                for (let i = 0; i < 100; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-10px';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.zIndex = '1000';
+
+                    document.body.appendChild(confetti);
+
+                    const animation = confetti.animate(
+                        [
+                            { transform: 'translateY(0) rotate(0)', opacity: 1 },
+                            { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                        ],
+                        {
+                            duration: 1500 + Math.random() * 3000,
+                            delay: Math.random() * 1000,
+                            easing: 'cubic-bezier(0,0.5,1,1)'
+                        }
+                    );
+
+                    animation.onfinish = () => {
+                        confetti.remove();
+                    };
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

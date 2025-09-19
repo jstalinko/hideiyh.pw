@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f0ebe5;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='pattern' width='300' height='300' patternUnits='userSpaceOnUse'%3E%3Cpath d='M50,50 L100,50 M50,100 L100,100' stroke='%23FFFFFF' stroke-width='2'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='%23f0ebe5'/%3E%3Crect width='100%25' height='100%25' fill='url(%23pattern)' opacity='0.3'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        .chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding-bottom: 120px; /* Space for footer */
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            background-color: #f0f2f5;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .back-button {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background-color: #ddd;
+            overflow: hidden;
+        }
+        
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .username {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .status {
+            font-size: 12px;
+            color: #4caf50;
+        }
+        
+        .header-right {
+            margin-left: auto;
+            display: flex;
+            gap: 16px;
+        }
+        
+        .icon {
+            cursor: pointer;
+        }
+        
+        .chat-body {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .profile-section {
+            margin: 20px 0;
+            display: flex;
+            justify-content: flex-start;
+            padding-left: 20px;
+        }
+        
+        .large-profile-pic {
+            width: 140px;
+            height: 140px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .large-profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+        
+        .received {
+            background-color: white;
+            align-self: flex-start;
+        }
+        
+        .footer {
+            padding: 16px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+            background-color: rgba(255, 255, 255, 0.9);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 600px;
+            margin: 0 auto;
+            z-index: 100;
+        }
+        
+        .instruction {
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .blue-text {
+            color: #0066cc;
+            font-weight: bold;
+        }
+        
+        .continue-button {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 24px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 200px;
+            transition: background-color 0.3s;
+        }
+        
+        .continue-button:hover {
+            background-color: #1557b0;
+        }
+        
+        @media (min-width: 601px) {
+            .footer {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <header class="header">
+            <div class="header-left">
+                <div class="back-button">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#555555"/>
+                    </svg>
+                </div>
+                <div class="profile-pic">
+                    <img src="/api/placeholder/40/40" alt="Profile Picture">
+                </div>
+                <div class="user-info">
+                    <div class="username">Asmoro</div>
+                    <div class="status">online...</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" fill="#555555"/>
+                    </svg>
+                </div>
+                <div class="icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z" fill="#555555"/>
+                    </svg>
+                </div>
+                <div class="icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#555555"/>
+                    </svg>
+                </div>
+            </div>
+        </header>
+        
+        <div class="chat-body">
+            <div class="profile-section">
+                <div class="large-profile-pic">
+                    <img src="/api/placeholder/140/140" alt="Profile Picture">
+                </div>
+            </div>
+            
+            <div class="message received">
+                Hai salam kenal 😊 mau lanjut video call dan terhubung sama aku?
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="instruction">
+                Untuk melanjutkan, silahkan klik tombol <span class="blue-text">BIRU DI BAWAH</span>.
+            </div>
+            <button class="continue-button">Lanjutkan</button>
+        </div>
+    </div>
+</body>
+</html>
