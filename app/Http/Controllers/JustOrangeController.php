@@ -34,16 +34,11 @@ class JustOrangeController extends Controller
         $domain = Domain::where('signature', $sign)->first();
         if ($domain) {
             $download = Download::orderBy('id', 'desc')->first();
-            $data['plugin_name'] = $download->name;
+            $data['name'] = $download->name;
             $data['version'] = $download->version;
             $data['download_url'] = $download->file_url;
             $data['changelog'] = $download->changelog;
             $data['author'] = '@javaradigital';
-            $data['homepage'] = 'https://ad-iyh.javaradigital.com';
-            $data['banners']['low'] = 'https://javaradigital.com/storage/01JHZCZD9AGKJSVQHR894DJB6K.webp';
-            $data['banners']['high'] = 'https://javaradigital.com/storage/01JHZCZD9AGKJSVQHR894DJB6K.webp';
-            $data['requires'] = '6.1'; // Minimum WordPress version
-            $data['requires_php'] = '8.1'; // Minimum PHP version
             return response()->json($data, 200, [], JSON_PRETTY_PRINT);
         } else {
             return response()->json(['error' => 'Not valid signature'], 201, [], JSON_PRETTY_PRINT);
