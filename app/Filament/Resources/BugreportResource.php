@@ -19,6 +19,7 @@ class BugreportResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-bug-ant';
     protected static ?string $label = 'Bug Report';
+    protected static ?int $navigationSort = 4;
 
     public static function getEloquentQuery(): Builder
     {

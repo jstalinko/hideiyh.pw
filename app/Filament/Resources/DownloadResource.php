@@ -18,7 +18,7 @@ class DownloadResource extends Resource
     protected static ?string $model = Download::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-cloud-arrow-down';
-    protected ?int $sort =1;
+    protected static ?int $navigationSort = 3;
 
 
     public static function canDelete(Model $record): bool {

@@ -22,6 +22,7 @@ class DomainResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-globe-alt';
 
+    protected static ?int $navigationSort = 2;
    
     public static function canCreate(): bool
     {
@@ -65,8 +66,9 @@ class DomainResource extends Resource
                     ->searchable()->badge(),
                 Tables\Columns\TextColumn::make('domain')
                     ->searchable()->badge(),
-                Tables\Columns\TextColumn::make('ip_server')
+                Tables\Columns\TextColumn::make('connection_type')
                     ->searchable()->badge(),
+                Tables\Columns\TextColumn::make('traffic_count')->label('Hits'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable(),

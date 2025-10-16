@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\BlockerAPIController;
+use App\Http\Controllers\API\GeolocationAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JustOrangeController;
@@ -22,3 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/releases', [JustOrangeController::class, 'releases']);
 Route::post('/validate', PluginValidateController::class);
+
+Route::group(['middleware' => 'auth.apikey'], function () {
+    Route::get('/geolocation/{ip}', GeolocationAPIController::class);
+    Route::get('/blocker', BlockerAPIController::class);
+});

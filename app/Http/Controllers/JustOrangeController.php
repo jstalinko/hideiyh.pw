@@ -6,9 +6,11 @@ use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Store;
 use App\Models\Domain;
+use App\Models\Package;
 use App\Models\Download;
 use App\Models\Timeline;
 use App\Models\DomainQuota;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use App\Models\Documentation;
 
@@ -24,6 +26,8 @@ class JustOrangeController extends Controller
 
 
         $props['myAdsense'] = $ads;
+        $props['packages'] = Package::where('active',true)->orderBy('price','asc')->get();
+        $props['testimonials'] = Testimonial::where('active',true)->get();
         $data['props'] = $props;
         return Inertia::render('justorange-default', $data);
     }

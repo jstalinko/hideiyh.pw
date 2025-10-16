@@ -1,0 +1,109 @@
+<?php
+/**--------------------------------------
+ * --------------------------------------
+ * HIDEIYH.PW 2025.
+ */
+
+/**
+ * Mendapatkan nama domain bersih dari request saat ini.
+ *
+ * @return string
+ */
+function getDomain(): string
+{
+    $host = $_SERVER['HTTP_HOST'] ?? '';
+    // Menghapus 'www.' dari awal domain
+    return preg_replace('/^www\./i', '', $host);
+}
+
+/**
+ * Fungsi inti untuk mengirim request ke HideIyh API.
+ * (Diawali dengan _ untuk menandakan ini adalah fungsi internal/helper).
+ *
+ * @param string $apiKey
+ * @param string $apiUrl
+ * @return array
+ */
+function _hideiyh_api_request(string $apiKey, string $apiUrl): array
+{
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, $apiUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    // Tambahkan timeout untuk mencegah script hang jika API lambat
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'X-HIDEIYH-APIKEY: ' . $apiKey,
+        'X-HIDEIYH-DOMAIN: ' . getDomain()
+    ]);
+
+    $response = curl_exec($ch);
+
+    // Error handling jika cURL gagal (misal: tidak bisa konek)
+    if (curl_errno($ch)) {
+        $error_msg = curl_error($ch);
+        curl_close($ch);
+        return ['status' => 'error', 'message' => 'cURL Error: ' . $error_msg];
+    }
+
+    curl_close($ch);
+
+    $data = json_decode($response, true);
+
+    // Error handling jika respons bukan JSON yang valid
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return ['status' => 'error', 'message' => 'Invalid JSON response from API.'];
+    }
+
+    return $data;
+}
+
+/**
+ * Memeriksa IP dan User-Agent menggunakan Blocker API.
+ *
+ * @param string $apiKey
+ * @param string $ipToCheck
+ * @param string $userAgent
+ * @return array
+ */
+function hideiyh_blocker(string $apiKey, string $ipToCheck, string $userAgent): array
+{
+    // Pastikan User-Agent di-encode agar aman di dalam URL
+    $encodedUserAgent = urlencode($userAgent);
+    $apiUrl = "https://hideiyh.pw/api/blocker?ip={$ipToCheck}&ua={$encodedUserAgent}";
+
+    return _hideiyh_api_request($apiKey, $apiUrl);
+}
+
+/**
+ * Mendapatkan data geolokasi dari sebuah IP menggunakan Geolocation API.
+ *
+ * @param string $apiKey
+ * @param string $ipToCheck
+ * @return array
+ */
+function hideiyh_geo(string $apiKey, string $ipToCheck): array
+{
+    // API ini menggunakan IP sebagai bagian dari path URL, bukan query string
+    $apiUrl = "https://hideiyh.pw/api/geolocation/{$ipToCheck}";
+
+    return _hideiyh_api_request($apiKey, $apiUrl);
+}
+
+
+
+// data:
+$apikey = "XXXXXXXX";
+$ip = $_SERVER['REMOTE_ADDR'];
+$ua = $_SERVER['HTTP_USER_AGENT'];
+
+//usage
+$geo = hideiyh_geo($apikey,$ip);
+$blocker = hideiyh_blocker($apikey,$ip,$ua);
+
+echo "== GEO RESULT ==\n";
+print_r($geo);
+echo "\n";
+echo "== BLOCKER RESULT ==\n";
+print_r($blocker);
+?>

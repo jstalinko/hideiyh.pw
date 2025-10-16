@@ -27,7 +27,9 @@ class User extends Authenticatable implements FilamentUser
         'password',
         'domain_quota',
         'invoice_code',
-        'phone'
+        'phone',
+        'package_id',
+        'apikey'
     ];
 
     /**
@@ -49,6 +51,20 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function subscriptions()
+{
+    return $this->hasMany(Subscription::class);
+}
+
+/**
+ * Helper relasi untuk mendapatkan HANYA langganan yang aktif
+ * Ini akan sangat menyederhanakan kode kita.
+ */
+public function activeSubscription()
+{
+    // Kita asumsikan 'active' adalah satu-satunya status yang valid untuk langganan berjalan
+    return $this->hasOne(Subscription::class)->where('status', 'active');
+}
     
     
 }

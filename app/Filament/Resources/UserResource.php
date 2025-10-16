@@ -57,6 +57,7 @@ protected static $PIWAPI_ACCOUNT_ID="1747398028019d385eb67632a7e958e23f24bd07d76
                     ->sortable()
                     ->formatStateUsing(fn($record) => $record->domain_quota . ' Domain'),
                 Tables\Columns\TextColumn::make('invoice_code'),
+                Tables\Columns\ToggleColumn::make('gold_member'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
