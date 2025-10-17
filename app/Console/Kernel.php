@@ -15,6 +15,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
          $schedule->command('traffic:sync')->everyMinute();
+         $schedule->command('subscriptions:notify-ending-soon')->dailyAt('12:00')->withoutOverlapping();
+         $schedule->command('subscriptions:expire')->dailyAt('00:01')->withoutOverlapping();
+         $schedule->command('notifications:send-whatsapp')->dailyAt('13:00')->withoutOverlapping();
     }
 
     /**

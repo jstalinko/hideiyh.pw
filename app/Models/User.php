@@ -12,9 +12,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable implements FilamentUser
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles , HasPanelShield;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPanelShield;
 
     /**
      * The attributes that are mass assignable.
@@ -52,19 +53,23 @@ class User extends Authenticatable implements FilamentUser
         'password' => 'hashed',
     ];
     public function subscriptions()
-{
-    return $this->hasMany(Subscription::class);
-}
+    {
+        return $this->hasMany(Subscription::class);
+    }
 
-/**
- * Helper relasi untuk mendapatkan HANYA langganan yang aktif
- * Ini akan sangat menyederhanakan kode kita.
- */
-public function activeSubscription()
-{
-    // Kita asumsikan 'active' adalah satu-satunya status yang valid untuk langganan berjalan
-    return $this->hasOne(Subscription::class)->where('status', 'active');
-}
-    
-    
+    /**
+     * Helper relasi untuk mendapatkan HANYA langganan yang aktif
+     * Ini akan sangat menyederhanakan kode kita.
+     */
+    public function activeSubscription()
+    {
+        // Kita asumsikan 'active' adalah satu-satunya status yang valid untuk langganan berjalan
+        return $this->hasOne(Subscription::class)->where('status', 'active');
+    }
+    public function routeNotificationForWhatsApp($notification): ?string
+    {
+        // Metode ini akan secara otomatis mengembalikan null jika
+        // nilai kolom 'phone_number' di database adalah NULL atau kosong.
+        return $this->phone;
+    }
 }

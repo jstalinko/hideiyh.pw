@@ -18,6 +18,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
+
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -28,6 +29,8 @@ class AdminPanelProvider extends PanelProvider
             ->path('dashboard')
             ->registration(\App\Filament\Pages\Auth\Register::class)
             ->login()
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
             ->profile()
             ->colors([
                 'primary' => Color::Gray,
@@ -57,7 +60,8 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
-                \TomatoPHP\FilamentSimpleTheme\FilamentSimpleThemePlugin::make()
+                \TomatoPHP\FilamentSimpleTheme\FilamentSimpleThemePlugin::make(),
+             
             ])->spa();
     
     }

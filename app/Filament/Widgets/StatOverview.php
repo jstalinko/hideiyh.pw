@@ -21,10 +21,10 @@ class StatOverview extends BaseWidget
                 ->icon('heroicon-o-globe-alt')
                 ->description('Remaining: '.$domainQuotaRemaining. ' | Registered: '.$domainQuotaUsed.' | Quota: '.$domainQuotaUser)
                 ->url(url('/dashboard/domains')),
-            Stat::make('Plugin Current Version', \App\Models\Download::orderBy('id', 'desc')->first()?->version)
+            Stat::make('Traffic Hits', \App\Models\Domain::count('traffic_count'))
                 ->color('warning')
-                ->icon('heroicon-o-cog')
-                ->description('Latest version available')
+                ->icon('heroicon-o-chart-bar-square')
+                ->description('Total traffic all domains')
                 ->url(url('/dashboard/downloads')),
 
 
