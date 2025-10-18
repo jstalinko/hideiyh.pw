@@ -25,20 +25,29 @@ class SubscriptionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
+                Forms\Components\Select::make('user_id')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('package_id')
+                    ->native(false)
+                    ->searchable()
+                    ->relationship('user','name'),
+                Forms\Components\Select::make('package_id')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('status')
-                    ->required(),
+                    ->native(false)
+                    ->relationship('package','name'),
+                Forms\Components\Select::make('status')
+                    ->required()
+                    ->options([
+                        'active' => 'ACTIVE',
+                        'expired' =>'EXPIRED',
+                        'past_due' => 'PAST DUE',
+                        'canceled' => 'CANCELED'
+                    ])->native(false),
                 Forms\Components\TextInput::make('subscription_code')
                     ->required(),
                 Forms\Components\TextInput::make('price')
                     ->required()
                     ->numeric()
-                    ->prefix('$'),
+                    ->prefix('Rp'),
                 Forms\Components\DateTimePicker::make('start_at')
                     ->required(),
                 Forms\Components\DateTimePicker::make('end_at')

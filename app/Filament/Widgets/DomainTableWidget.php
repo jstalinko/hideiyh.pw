@@ -7,6 +7,7 @@ use App\Models\Domain;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\Action;
 use Filament\Widgets\TableWidget as BaseWidget;
+use Illuminate\Support\Number;
 
 class DomainTableWidget extends BaseWidget
 {
@@ -38,8 +39,9 @@ public function mount(): void
                 Tables\Columns\TextColumn::make('signature'),
                 Tables\Columns\TextColumn::make('domain')
                 ->searchable()->badge(),
-            Tables\Columns\TextColumn::make('ip_server')
-                ->searchable()->badge(),
+            Tables\Columns\TextColumn::make('connection_type')->label('Connection Type')->badge(),
+            Tables\Columns\TextColumn::make('traffic_count')->label('Traffic Today')->formatStateUsing(fn($state) => Number::forHumans($state))
+                ->searchable(),
             Tables\Columns\TextColumn::make('created_at')
                 ->dateTime()
                 ->sortable()

@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('traffic:reset-daily')->daily();
          $schedule->command('traffic:sync')->everyMinute();
          $schedule->command('subscriptions:notify-ending-soon')->dailyAt('12:00')->withoutOverlapping();
          $schedule->command('subscriptions:expire')->dailyAt('00:01')->withoutOverlapping();

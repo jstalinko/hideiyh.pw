@@ -11,7 +11,7 @@ class Domain extends Model
 
     protected $fillable = 
     ['signature',
-    'user_id','domain','ip_server'];
+    'user_id','domain','ip_server' , 'traffic_count' , 'connection_type'];
 
     public function user()
     {

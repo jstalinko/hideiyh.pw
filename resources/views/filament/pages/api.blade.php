@@ -1,5 +1,49 @@
 <x-filament-panels::page>
+@php
+$my = $this->mySubscription();
 
+@endphp
+
+@if(!$my['is_gold'] && !$my['package']->feature_api_blocker && !$my['package']->feature_api_geolocation)
+
+<x-filament::section>
+    <x-slot name="heading">
+        No Subscription
+    </x-slot>
+
+    {{-- Ganti <div> lama Anda dengan ini --}}
+    <div class="flex flex-col items-center justify-center space-y-4  text-center">
+        
+        {{-- Ikon --}}
+        <div class="p-3 bg-warning-50 dark:bg-warning-500/10 rounded-full">
+            <x-heroicon-o-exclamation-triangle class="w-10 h-10 text-warning-500" />
+        </div>
+
+        {{-- Judul Alert --}}
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            Feature Not Active
+        </h3>
+
+        {{-- Deskripsi --Aler --}}
+        <p class="text-sm text-gray-500 dark:text-gray-400 max-w-sm">
+            Please upgrade your subscription first to access this feature.
+        </p>
+
+        {{-- Tombol Aksi --}}
+        <div class="pt-3">
+            <x-filament::button
+                tag="a"
+                href="{{ url('/#pricing') }}"
+                icon="heroicon-m-arrow-up-circle"
+            >
+                Upgrade Now
+            </x-filament::button>
+        </div>
+    </div>
+    
+</x-filament::section>
+
+@else
   {{-- =================================== --}}
     {{--        BAGIAN API KEY PENGGUNA        --}}
     {{-- =================================== --}}
@@ -199,4 +243,5 @@
 
     </div>
 
+    @endif
 </x-filament-panels::page>

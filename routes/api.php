@@ -23,9 +23,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/releases', [JustOrangeController::class, 'releases']);
-Route::post('/validate', PluginValidateController::class);
+Route::post('/validate', PluginValidateController::class)->middleware(['auth.domain','package','traffic']);
 
-Route::group(['middleware' => 'auth.apikey'], function () {
+Route::group(['middleware' => ['auth.apikey','package','traffic']], function () {
     Route::get('/geolocation/{ip}', GeolocationAPIController::class);
     Route::get('/blocker', BlockerAPIController::class);
 });

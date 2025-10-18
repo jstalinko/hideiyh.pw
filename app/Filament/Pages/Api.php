@@ -50,5 +50,15 @@ class Api extends Page
             ->modalSubmitAction(false) // Sembunyikan tombol submit
             ->modalCancelActionLabel('Close');
     }
+
+    public function mySubscription()
+    {
+        $user = User::find(auth()->user()->id);
+        return [
+            'activeSubscription' => $user->activeSubscription,
+            'package' => $user->activeSubscription->package,
+            'is_gold' => $user->gold_member
+        ];
+    }
   
 }

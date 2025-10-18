@@ -15,16 +15,17 @@ class SyncTraffic extends Command
         $keys = Redis::keys('traffic:*');
         foreach ($keys as $key) {
 
-            $signature = explode('traffic:', $key);
+            $signature = explode(':', $key);
             $signature = $signature[1];
-            $myKey=preg_replace('/laravel_database_/' , '' , $key);
-            $count = (int) Redis::get($myKey);
+        
+        
+            $count = (int) Redis::get('traffic:'.$signature);
             if ($count > 0) {
                  $dm=Domain::where('signature', $signature);
                  $dm->increment('traffic_count', $count);
 
                 $this->info('DOMAIN: ' . $dm->first()->domain. ' Synced ( +'.$count. ' ) Total : '.$dm->first()->traffic_count);
-                Redis::del($myKey);
+                Redis::del('traffic:'.$signature);
             }
         }
      

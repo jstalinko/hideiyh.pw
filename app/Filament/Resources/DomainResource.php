@@ -15,6 +15,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Number;
 
 class DomainResource extends Resource
 {
@@ -54,6 +55,9 @@ class DomainResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('ip_server')
                     ->required(),
+                Forms\Components\TextInput::make('traffic_count')
+                ->required(),
+            Forms\Components\TextInput::make('connection_type')->required()
             ]);
     }
 
@@ -68,7 +72,7 @@ class DomainResource extends Resource
                     ->searchable()->badge(),
                 Tables\Columns\TextColumn::make('connection_type')
                     ->searchable()->badge(),
-                Tables\Columns\TextColumn::make('traffic_count')->label('Hits'),
+                Tables\Columns\TextColumn::make('traffic_count')->label('Traffic Today')->formatStateUsing(fn($state) => Number::forHumans($state)),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable(),

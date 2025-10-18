@@ -25,7 +25,7 @@ class PluginValidateController extends Controller
 
         if ($checkUser) {
             $user = User::where('email', $email)->first();
-            $sign = sha1($user->id . $email . $domain);
+            $sign = sha1($user->id.$domain);
             $dom = Domain::where('signature', $sign);
 
             if ($dom->exists()) {

@@ -124,6 +124,14 @@
                             <span>API Blocker Access</span>
                         </li>
                     @endif
+                    <li class="flex items-center gap-x-2">
+                            <x-heroicon-o-check-circle class="w-5 h-5 text-green-500" />
+                            <span>{{ number_format($subscription->package->visitor_quota_perday) }} Traffic Limit/Day/Domain</span>
+                        </li>
+                    <li class="flex items-center gap-x-2">
+                          <x-heroicon-o-check-circle class="w-5 h-5 text-green-500" />
+                            <span>{{ number_format($subscription->package->domain_quota) }} Domain</span>
+                    </li>
                 </ul>
             </div>
         </div>

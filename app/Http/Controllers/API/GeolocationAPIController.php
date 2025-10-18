@@ -38,26 +38,7 @@ class GeolocationAPIController extends Controller
                 'errors' => $e->errors()
             ], 422); // Unprocessable Entity
         }
-        $domain = $request->header('X-HIDEIYH-DOMAIN');
-        $user = $request->user();
-
-        /** check domain */
-        $domain_signature = sha1($user->id . $domain);
-        // buat record domain kalau belum ada
-        Domain::firstOrCreate(
-            ['signature' => $domain_signature],
-            [
-                'ip_server' => $request->ip(),
-                'user_id' => $user->id,
-                'domain' => $domain,
-                'traffic_count' => 0,
-                'connection_type' => 'api',
-            ]
-        );
-
-        // tambahkan traffic ke Redis
-        $key = "traffic:$domain_signature";
-        Redis::incr($key);
+      
         
 
         // Langkah 2: Buat cache key yang unik dan tentukan durasi cache.

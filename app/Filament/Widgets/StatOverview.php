@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Support\Number;
 
 class StatOverview extends BaseWidget
 {
@@ -21,7 +22,7 @@ class StatOverview extends BaseWidget
                 ->icon('heroicon-o-globe-alt')
                 ->description('Remaining: '.$domainQuotaRemaining. ' | Registered: '.$domainQuotaUsed.' | Quota: '.$domainQuotaUser)
                 ->url(url('/dashboard/domains')),
-            Stat::make('Traffic Hits', \App\Models\Domain::count('traffic_count'))
+            Stat::make('Traffic Hits Today', Number::forHumans(\App\Models\Domain::sum('traffic_count')))
                 ->color('warning')
                 ->icon('heroicon-o-chart-bar-square')
                 ->description('Total traffic all domains')
