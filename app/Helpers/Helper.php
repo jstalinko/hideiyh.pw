@@ -22,4 +22,6 @@ Class Helper{
         // 4. Tambahkan awalan "XHID-" dan kembalikan hasilnya
         return 'XHID-' . $formattedKey;
     }
+
+    
 }
