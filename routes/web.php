@@ -19,3 +19,5 @@ Route::get('/', [JustOrangeController::class , 'index']);
 Route::get('/docs',[DocumentationController::class,'index']);
 Route::get('/docs/{slug}',[DocumentationController::class , 'detail']);
 Route::get('/invoice/{invoice}',[JustOrangeController::class,'invoice']);
+Route::get('/plan/invoice/{invoice}',[JustOrangeController::class,'planInvoice']);
+Route::get('/plan/{plan_name}',[JustOrangeController::class,'plan']);

@@ -31,6 +31,33 @@ class JustOrangeController extends Controller
         $data['props'] = $props;
         return Inertia::render('justorange-default', $data);
     }
+    public function plan(Request $request)
+    {
+        if(auth()->check())
+        {
+            $user = User::find(auth()->user()->id);
+            $customer = [
+                'name' => $user->name,
+                'phone' => $user->phone,
+                'email' => $user->email,
+                'auth' => true
+            ];
+        }else{
+            $customer = [
+                'name' => '',
+                'phone' => '',
+                'email' => '',
+                'auth' => false
+            ];
+        };
+        $plan_name = $request->plan_name;
+        $package = Package::where('name','LIKE','%'.$plan_name.'%')->first();
+        $props['packageActive'] = $package;
+        $props['packages'] = Package::where('active',true)->get();
+        $props['customerDetails'] = $customer;
+        $data['props'] = $props;
+        return Inertia::render('plan',$data);
+    }
 
     public function releases(Request $request)
     {
@@ -77,14 +104,14 @@ class JustOrangeController extends Controller
     {
         if($request->type == 'all')
         {
-            $timeline = Timeline::orderBy('id','desc')->get();
+          
             $download = Download::select('version','tag_name','changelog','id')->orderBy('version','desc')->get();
-            return response()->json(['success' => true, 'data' => ['timeline'=>$timeline,'release' => $download ]],200,[],JSON_PRETTY_PRINT);
+            return response()->json(['success' => true, 'data' => ['release' => $download ]],200,[],JSON_PRETTY_PRINT);
         }elseif($request->type == 'latest')
             {
-                $timeline = Timeline::orderBy('id','desc')->first();
+                
             $download = Download::select('version','tag_name','changelog','id')->orderBy('version','desc')->first();
-             return response()->json(['success' => true, 'data' => ['timeline' => $timeline,'release' => $download]],200,[],JSON_PRETTY_PRINT);
+             return response()->json(['success' => true, 'data' => ['release' => $download]],200,[],JSON_PRETTY_PRINT);
 
             }
         }
@@ -140,5 +167,13 @@ class JustOrangeController extends Controller
             ], 200, [], JSON_PRETTY_PRINT);
         }
         
+
+        public function planInvoice(Request $request)
+        {
+            
+            $props['invoiceId'] = $request->invoice;
+            $data['props'] = $props;
+            return Inertia::render('plan-invoice',$data);
+        }
     
 }

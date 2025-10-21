@@ -216,8 +216,8 @@ const scrollTestimonials = (direction) => {
               <div class="my-5">
                 <div class="flex items-baseline justify-center">
                     
-                    <span class="text-5xl font-extrabold" :class="{'text-6xl': plan.highlighted}">{{ formatCurrency(plan.price) }}</span>
-                    <span class="ml-1 text-xl font-semibold text-gray-400">{{ plan.billingCycle }}</span>
+                    <span class="text-4xl font-extrabold" :class="{'text-3xl': plan.highlighted}">{{ formatCurrency(plan.price) }}</span>
+                    <span class="ml-1 text-xl font-semibold text-gray-400">/{{ plan.billing_cycle }}</span>
                 </div>
                 <div class="text-center h-6 mt-1"> <span v-if="plan.originalPrice" class="line-through text-gray-500 text-lg">
                     ${{ plan.originalPrice }}
@@ -231,9 +231,9 @@ const scrollTestimonials = (direction) => {
                   <span>{{ feature }}</span>
                 </li>
               </ul>
-              <button :class="['w-full mt-auto font-bold py-3 px-6 rounded-lg transition-colors', plan.highlighted ? 'bg-orange-500 hover:bg-orange-600 text-white' : 'bg-gray-700 hover:bg-gray-600 text-gray-200']">
+              <a :href="'/plan/'+plan.name.toLowerCase()" target="_blank" :class="['w-full mt-auto font-bold py-3 px-6 rounded-lg transition-colors', plan.highlighted ? 'bg-orange-500 hover:bg-orange-600 text-white' : 'bg-gray-700 hover:bg-gray-600 text-gray-200']">
                 Pilih Paket
-              </button>
+              </a>
             </div>
           </div>
         </div>

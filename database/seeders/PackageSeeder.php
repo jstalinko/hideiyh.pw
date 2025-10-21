@@ -30,7 +30,7 @@ class PackageSeeder extends Seeder
                 'visitor_quota_perday' => 5000,
                 'active' => true,
                 'price' => 250000,
-                'billing_cycle' => 'monthly', // Menggunakan 'monthly' lebih baik untuk logika
+                'billing_cycle' => 'month', // Menggunakan 'monthly' lebih baik untuk logika
             ],
             [
                 'name' => 'Pro',
@@ -42,7 +42,7 @@ class PackageSeeder extends Seeder
                 'visitor_quota_perday' => 10000,
                 'active' => true,
                 'price' => 450000,
-                'billing_cycle' => 'monthly',
+                'billing_cycle' => 'month',
             ],
             [
                 'name' => 'Business',
@@ -56,7 +56,7 @@ class PackageSeeder extends Seeder
                 'visitor_quota_perday' => -1, 
                 'active' => true,
                 'price' => 950000,
-                'billing_cycle' => 'monthly',
+                'billing_cycle' => 'month',
             ],
         ];
 

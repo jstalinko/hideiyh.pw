@@ -166,7 +166,7 @@
         message+=`QUOTA DOMAIN : ${$prop.props.domain.amount} | \n`;
         message+=`TOTAL BAYAR : ${$prop.props.domain.total_price} | \n`;
         message+=`-----------------------------------------\n`;
-        message+`USER EMAIL : ${$prop.props.user.email}\n`;
+        message+=`USER EMAIL : ${$prop.props.user.email}\n`;
     window.location.href = `https://wa.me/6285643307507?text=${encodeURIComponent(message)}`;
   };
   </script>
