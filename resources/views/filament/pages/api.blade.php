@@ -4,7 +4,7 @@ $my = $this->mySubscription();
 
 @endphp
 
-@if(!$my['is_gold'] && !$my['package']->feature_api_blocker && !$my['package']->feature_api_geolocation)
+@if(!$my['is_gold'] && isset($my['package']) && !$my['package']->feature_api_blocker && !$my['package']->feature_api_geolocation)
 
 <x-filament::section>
     <x-slot name="heading">

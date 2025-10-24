@@ -56,7 +56,7 @@ class Api extends Page
         $user = User::find(auth()->user()->id);
         return [
             'activeSubscription' => $user->activeSubscription,
-            'package' => $user->activeSubscription->package,
+            'package' => $user->activeSubscription?->package  ?? null,
             'is_gold' => $user->gold_member
         ];
     }
