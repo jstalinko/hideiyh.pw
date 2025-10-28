@@ -16,11 +16,17 @@ class AuthWithSignatureMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $email = $request->email;
-        $cacheKey = 'user_by_apikey_' . $email;
+        $cacheKey = 'user_by_email_' . $email;
         $user = cache()->remember($cacheKey, now()->addMinutes(10), function () use ($email) {
             return \App\Models\User::where('email', $email)->first();
         });
-        $user = $request->setUserResolver(function () use ($user) {
+         if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid Email provided.'
+            ], 401); 
+        }
+        $request->setUserResolver(function () use ($user) {
             return $user;
         });
 

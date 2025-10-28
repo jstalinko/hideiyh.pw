@@ -41,7 +41,7 @@ class PluginValidateController extends Controller
                 
                 } else {
                 
-                    $create = Domain::create(['signature' => $sign, 'ip_server' => $ip_server, 'user_id' => $user->id, 'domain' => $domain]);
+                    $create = Domain::create(['signature' => $sign, 'ip_server' => $ip_server, 'user_id' => $user->id, 'domain' => $domain , 'connection_type' => 'web' , 'traffic_count' => 1]);
                     if ($create) {
                         return response()->json(['success' => true, 'signature' => $sign, 'data' => $dom], 200, [], JSON_PRETTY_PRINT);
                     } else {
