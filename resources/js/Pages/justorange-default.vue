@@ -294,7 +294,7 @@ const scrollTestimonials = (direction) => {
     <footer class="bg-gray-950 border-t border-gray-800">
       <div class="container mx-auto px-6 py-8 text-center text-gray-400">
         <p>&copy; {{ new Date().getFullYear() }} HideIyh.pw. All Rights Reserved.</p>
-        <p class="text-sm mt-2">Powered by Javaradigital</p>
+        <p class="text-sm mt-2">Powered by <a href="https://javaradigital.com" target="_blank" class="underline">Javaradigital</a></p>
       </div>
     </footer>
   </div>

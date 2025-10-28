@@ -20,9 +20,11 @@ class AuthWithSignatureMiddleware
         $user = cache()->remember($cacheKey, now()->addMinutes(10), function () use ($email) {
             return \App\Models\User::where('email', $email)->first();
         });
-        $request->setUserResolver(function () use ($user) {
+        $user = $request->setUserResolver(function () use ($user) {
             return $user;
         });
+
+
         return $next($request);
     }
 }

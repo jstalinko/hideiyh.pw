@@ -173,7 +173,7 @@ async function fetchPaymentChannels() {
     isPaymentLoading.value = true;
     paymentError.value = null;
     
-    const response = await fetch('http://localhost:8001/api/payment-channel');
+    const response = await fetch('https://javaradigital.com/api/payment-channel');
     if (!response.ok) throw new Error(`Gagal mengambil data: ${response.statusText}`);
     
     const data = await response.json();

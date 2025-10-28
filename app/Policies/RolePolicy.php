@@ -9,12 +9,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class RolePolicy
 {
     use HandlesAuthorization;
-public function before(User $user, $ability)
-{
-    if ($user->hasRole('super_admin')) {
-        return true;
-    }
-}
+
     /**
      * Determine whether the user can view any models.
      */

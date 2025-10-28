@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
@@ -14,14 +15,15 @@ use Filament\Tables\Table;
 
 class UserResource extends Resource
 {
- 
+    use HasPanelShield;
+
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
     protected static ?string $navigationGroup = 'User & Roles';
 
-    protected static $PIWAPI_SECRET="e981b0f06eb2d4934f17cf40a221191aab07076a";
-protected static $PIWAPI_ACCOUNT_ID="1747398028019d385eb67632a7e958e23f24bd07d768272d8c0b04e";
+    protected static $PIWAPI_SECRET = "e981b0f06eb2d4934f17cf40a221191aab07076a";
+    protected static $PIWAPI_ACCOUNT_ID = "1747398028019d385eb67632a7e958e23f24bd07d768272d8c0b04e";
 
     public static function form(Form $form): Form
     {
@@ -131,15 +133,15 @@ protected static $PIWAPI_ACCOUNT_ID="1747398028019d385eb67632a7e958e23f24bd07d76
                         ]);
                     })
                     ->action(function (array $data, \Illuminate\Support\Collection $records) {
-                        
-                        
+
+
                         $list_numbers = explode("\n", $data['list_numbers']);
                         $message = $data['message'];
-                        
+
                         $piwapi_secret = self::$PIWAPI_ACCOUNT_ID;
                         $piwapi_apikey = self::$PIWAPI_SECRET;
                         $url = "https://piwapi.com/api/send/whatsapp.bulk";
-                      //  dd(implode(",", $list_numbers), $message, $piwapi_secret, $piwapi_apikey);
+                        //  dd(implode(",", $list_numbers), $message, $piwapi_secret, $piwapi_apikey);
                         $data = [
                             "secret" => $piwapi_apikey,
                             "account" => $piwapi_secret,
