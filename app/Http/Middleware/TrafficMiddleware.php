@@ -37,7 +37,7 @@ class TrafficMiddleware
         $domain_signature = sha1($user->id . $domain);
         // buat record domain kalau belum ada
         $dm = Domain::firstOrCreate(
-            ['signature' => $domain_signature, 'user_id' => $user->id],
+            ['domain' => $domain, 'user_id' => $user->id],
             [
                 'ip_server' => $request->ip(),
                 'domain' => $domain,
