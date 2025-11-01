@@ -40,7 +40,7 @@ class TrafficMiddleware
             ['domain' => $domain, 'user_id' => $user->id],
             [
                 'ip_server' => $request->ip(),
-                'domain' => $domain,
+                'signature' => $domain_signature,
                 'traffic_count' => 1,
                 'connection_type' => $type,
             ]
