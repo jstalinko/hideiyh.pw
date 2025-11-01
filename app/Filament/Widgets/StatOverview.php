@@ -22,7 +22,7 @@ class StatOverview extends BaseWidget
                 ->icon('heroicon-o-globe-alt')
                 ->description('Remaining: '.$domainQuotaRemaining. ' | Registered: '.$domainQuotaUsed.' | Quota: '.$domainQuotaUser)
                 ->url(url('/dashboard/domains')),
-            Stat::make('Traffic Hits Today', Number::forHumans(\App\Models\Domain::sum('traffic_count')))
+            Stat::make('Traffic Hits Today', Number::forHumans(\App\Models\Domain::where('user_id',auth()->user()->id)->sum('traffic_count')))
                 ->color('warning')
                 ->icon('heroicon-o-chart-bar-square')
                 ->description('Total traffic all domains')
