@@ -23,7 +23,7 @@ class TrafficMiddleware
         $domain = $request->header('X-HIDEIYH-DOMAIN');
         if (isset($request->domain)) {
             $domain = $request->domain;
-        } elseif ($domain === null) {
+        } elseif ($domain == null) {
             return response()->json(['status' => 'error', 'message' => 'No domain provided'], 201, [], JSON_PRETTY_PRINT);
         }
 

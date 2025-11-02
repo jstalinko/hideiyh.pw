@@ -17,7 +17,7 @@ class AuthWithSignatureMiddleware
     {
         $email = $request->email;
         $cacheKey = 'user_by_email_' . $email;
-        $user = cache()->remember($cacheKey, now()->addMinutes(10), function () use ($email) {
+        $user = cache()->remember($cacheKey, now()->addMinutes(5), function () use ($email) {
             return \App\Models\User::where('email', $email)->first();
         });
          if (!$user) {
