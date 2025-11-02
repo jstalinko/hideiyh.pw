@@ -20,12 +20,15 @@ class TrafficMiddleware
         $user = $request->user();
         $subscription = $user->activeSubscription;
 
-        $domain = $request->header('X-HIDEIYH-DOMAIN');
-        if (isset($request->domain)) {
-            $domain = $request->domain;
-        } elseif ($domain == null) {
-            return response()->json(['status' => 'error', 'message' => 'No domain provided'], 201, [], JSON_PRETTY_PRINT);
+        $domain = $request->header('X-HIDEIYH-DOMAIN') ?? $request->domain;
+
+        if (empty($domain)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No domain provided'
+            ], 400, [], JSON_PRETTY_PRINT);
         }
+
 
         $user = $request->user();
 
@@ -52,7 +55,7 @@ class TrafficMiddleware
         }
 
         if (!$user->gold_member) {
-            
+
             if ($user->domain_quota != $subscription->package->domain_quota) {
                 $user->domain_quota = $subscription->package->domain_quota;
                 $user->save();
