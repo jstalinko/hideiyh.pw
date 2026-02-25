@@ -8699,3 +8699,11 @@ Did you mean one of these?
 #49 /home/shn/workspace/hideiyh-new/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(16): require_once('...')
 #50 {main}
 "} 
+[2026-02-25 18:39:50] local.ERROR: Declaration of App\Filament\Resources\VisitorLogResource::canDelete(): bool must be compatible with Filament\Resources\Resource::canDelete(Illuminate\Database\Eloquent\Model $record): bool {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Declaration of App\\Filament\\Resources\\VisitorLogResource::canDelete(): bool must be compatible with Filament\\Resources\\Resource::canDelete(Illuminate\\Database\\Eloquent\\Model $record): bool at /home/shn/workspace/hideiyh-new/app/Filament/Resources/VisitorLogResource.php:32)
+[stacktrace]
+#0 {main}
+"} 
+[2026-02-25 18:39:50] local.ERROR: Declaration of App\Filament\Resources\VisitorLogResource::canDelete(): bool must be compatible with Filament\Resources\Resource::canDelete(Illuminate\Database\Eloquent\Model $record): bool {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Declaration of App\\Filament\\Resources\\VisitorLogResource::canDelete(): bool must be compatible with Filament\\Resources\\Resource::canDelete(Illuminate\\Database\\Eloquent\\Model $record): bool at /home/shn/workspace/hideiyh-new/app/Filament/Resources/VisitorLogResource.php:32)
+[stacktrace]
+#0 {main}
+"} 

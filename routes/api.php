@@ -31,3 +31,5 @@ Route::group(['middleware' => ['auth.apikey', 'package', 'traffic']], function (
     Route::get('/blocker', BlockerAPIController::class);
     Route::post('/visitor-log', [\App\Http\Controllers\API\VisitorLogAPIController::class, 'store']);
 });
+
+Route::get('/load-config/{uniqid}', [\App\Http\Controllers\API\FlowConfigAPIController::class, 'loadConfig']);

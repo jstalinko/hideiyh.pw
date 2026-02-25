@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class VisitorLogResource extends Resource
@@ -20,6 +21,23 @@ class VisitorLogResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-s-list-bullet';
 
     protected static ?string $navigationGroup = 'Integration';
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+    public static function canDelete(Model $record): bool
+    {
+        return false;
+    }
+    public static function canView(Model $record): bool
+    {
+        return false;
+    }
+    public static function canEdit(Model $record): bool
+    {
+        return false;
+    }
 
     public static function form(Form $form): Form
     {
@@ -34,14 +52,14 @@ class VisitorLogResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('flow.name')->label('Flow Name'),
+                Tables\Columns\TextColumn::make('reason')->label('Reason'),
                 Tables\Columns\TextColumn::make('ip')->label('IP Address'),
                 Tables\Columns\TextColumn::make('country')->label('Country'),
                 Tables\Columns\TextColumn::make('device')->label('Device'),
                 Tables\Columns\TextColumn::make('browser')->label('Browser'),
                 Tables\Columns\TextColumn::make('referer')->label('Referer'),
-                Tables\Columns\TextColumn::make('user_agent')->label('User Agent'),
+                Tables\Columns\TextColumn::make('user_agent')->label('User Agent')->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('isp')->label('ISP'),
-                Tables\Columns\TextColumn::make('reason')->label('Reason'),
                 Tables\Columns\TextColumn::make('created_at')->label('Created At'),
             ])
             ->filters([
