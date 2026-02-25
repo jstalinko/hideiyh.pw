@@ -12,6 +12,8 @@ use Filament\Notifications\Notification;
 class Api extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-m-code-bracket';
+    protected static ?string $navigationGroup = 'Integration';
+
 
     protected static string $view = 'filament.pages.api';
     protected static ?int $navigationSort = 5;
@@ -29,14 +31,14 @@ class Api extends Page
             ->action(function () {
                 $user = User::find(auth()->user()->id);
                 $user->update([
-                    'apikey' => Helper::generateApikey(Str::random(60).$user->id) // Membuat key baru yang aman
+                    'apikey' => Helper::generateApikey(Str::random(60) . $user->id) // Membuat key baru yang aman
                 ]);
 
                 Notification::make()
                     ->title('API Key has been revoked and a new one generated!')
                     ->success()
                     ->send();
-                
+
                 // Refresh halaman untuk menampilkan key baru
                 return redirect(static::getUrl());
             });
@@ -60,5 +62,4 @@ class Api extends Page
             'is_gold' => $user->gold_member
         ];
     }
-  
 }

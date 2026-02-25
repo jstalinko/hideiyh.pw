@@ -1,0 +1,40 @@
+
+
+[O] Links Features
+
+- Shorturl slug / random format.
+- Anti Loop Visitor 
+- Offer URL Options : Direct URL / Random Link By Percentage.
+- White URL Options : Landing-page or redirect url.
+- Bot URL Options : Landing-page or redirect url.
+- Lock referer : Fb referer, google referer, custom referer , all referer.
+- Lock Device : Mobile,desktop,all .
+- Lock Browser : FB Browser,Chrome Browser, ALL Browser.
+- Lock Country
+- Allowed Params
+- Lock ISP Custom : ON/OFF
+- Block VPN : ON/OFF
+- Ad-Iyh Signature : ON/OFF
+- Activate Bot Blocker : ON/OFF
+
+[O] Links Manager
+* Memungkinkan anda membuat shortlink dengan redirect url random by percentage traffic.
+
+[O] Custom Referer
+* Memungkinkan anda memasukan nama domain referer yang akan di allow, jika mengaktifkan fitur ini anda harus "Lock Referer" setting ke "Custom",saat create Shortlink
+
+[O] Lock ISP
+* Memungkinkan anda memasukan nama ISP yang akan di allow, jika mengaktifkan fitur ini anda harus "Lock ISP" setting ke "Custom", saat create Shortlink.
+
+[O] Global Config
+- Mode : Custom,facebook, google ( Kemananan masing-masing platform sangat berbeda maka tentukan dimana traffic anda bersumber dengan setting mode )
+- Blocked Countries: Meskipun di create shortlink allow all country, jika di global config block country maka akan ter-block.
+- Block VPN : Semua traffic yang terdeteksi vpn / proxy akan terblock ke white url.
+- Block no referer : Semua traffic yang tidak mempunyai referer ( url sumber ) Maka akan terblock ke white url.
+- Custom HTML Header code & Footer code : memungkinkan anda untuk memasukan script histats atau platform monitoring traffic lainnya.
+
+[O] Blocker
+* Memungkinkan anda untuk menambah fitur blocker secara mandiri yang menurut anda perlu di block. kami menyediakan Block IP, Block ISP,Block Hostname dan block referer.
+
+[O] Manage Users.
+* memungkinkan anda sebagai admin untuk membuat user baru dengan 2 level berbeda admin dan user.

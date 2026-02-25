@@ -24,7 +24,10 @@ class DomainResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-globe-alt';
 
     protected static ?int $navigationSort = 2;
-   
+
+    protected static ?string $navigationGroup = 'Website';
+
+
     public static function canCreate(): bool
     {
         return auth()->user()->hasRole('super_admin') ? true : false;
@@ -38,7 +41,7 @@ class DomainResource extends Resource
         return parent::getEloquentQuery()
             // Custom filtering conditions
             ->when(
-                auth()->user()->hasRole('super_admin'), 
+                auth()->user()->hasRole('super_admin'),
                 fn($query) => $query, // No restrictions for admins
                 fn($query) => $query->where('user_id', auth()->id()) // Scope for non-admin users
             )
@@ -56,8 +59,8 @@ class DomainResource extends Resource
                 Forms\Components\TextInput::make('ip_server')
                     ->required(),
                 Forms\Components\TextInput::make('traffic_count')
-                ->required(),
-            Forms\Components\TextInput::make('connection_type')->required()
+                    ->required(),
+                Forms\Components\TextInput::make('connection_type')->required()
             ]);
     }
 
@@ -94,43 +97,41 @@ class DomainResource extends Resource
                 ]),
             ])->headerActions([
                 Tables\Actions\Action::make('add_domain_quota')->icon('heroicon-s-plus')
-                ->form([
-                    Forms\Components\TextInput::make('amount')->helperText('Banyaknya order tambah quota domain')
-                    ->numeric()
-                    ->minLength(1)
-                    ->reactive()
-                    ->afterStateUpdated(function($set,$state){
-                        if($state < 1)
-                        {
-                            $total = str_replace(",",".",number_format(75000*1));
-                            $set('amount',1);
-                            $set('total_price' , $total);
-                        }else{
-                        $total = number_format(75000*$state);
-                       $set('total_price' , str_replace(",",".",$total));
-                        }
-                    }),
-                    Forms\Components\TextInput::make('total_price')->readonly(),
-                ])->action(function($data){
-                    $price = 75000;
-                    $kodeUnik = rand(100,900);
-                    $total = ($data['amount']*$price)+$kodeUnik;
-                    $amount = $data['amount'];
-                    $invoice = 'REQD'.date('dmYHi').auth()->user()->id;
-                    $domainQuota = new DomainQuota();
-                    $domainQuota->user_id = auth()->user()->id;
-                    $domainQuota->amount =  $amount;
-                    $domainQuota->invoice = $invoice;
-                    $domainQuota->current_domain_quota = auth()->user()->domain_quota;
-                    $domainQuota->total_price = $total;
-                    $domainQuota->kode_unik = $kodeUnik;
-                    $domainQuota->status = 'pending';
-                    $domainQuota->save();
-                    Notification::make('success')->title('Success !')->body('success request domain quota')->send();
+                    ->form([
+                        Forms\Components\TextInput::make('amount')->helperText('Banyaknya order tambah quota domain')
+                            ->numeric()
+                            ->minLength(1)
+                            ->reactive()
+                            ->afterStateUpdated(function ($set, $state) {
+                                if ($state < 1) {
+                                    $total = str_replace(",", ".", number_format(75000 * 1));
+                                    $set('amount', 1);
+                                    $set('total_price', $total);
+                                } else {
+                                    $total = number_format(75000 * $state);
+                                    $set('total_price', str_replace(",", ".", $total));
+                                }
+                            }),
+                        Forms\Components\TextInput::make('total_price')->readonly(),
+                    ])->action(function ($data) {
+                        $price = 75000;
+                        $kodeUnik = rand(100, 900);
+                        $total = ($data['amount'] * $price) + $kodeUnik;
+                        $amount = $data['amount'];
+                        $invoice = 'REQD' . date('dmYHi') . auth()->user()->id;
+                        $domainQuota = new DomainQuota();
+                        $domainQuota->user_id = auth()->user()->id;
+                        $domainQuota->amount =  $amount;
+                        $domainQuota->invoice = $invoice;
+                        $domainQuota->current_domain_quota = auth()->user()->domain_quota;
+                        $domainQuota->total_price = $total;
+                        $domainQuota->kode_unik = $kodeUnik;
+                        $domainQuota->status = 'pending';
+                        $domainQuota->save();
+                        Notification::make('success')->title('Success !')->body('success request domain quota')->send();
 
-                    return redirect('/invoice/'.$invoice);
-
-                })
+                        return redirect('/invoice/' . $invoice);
+                    })
             ]);
     }
 

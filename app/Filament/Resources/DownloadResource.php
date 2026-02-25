@@ -19,9 +19,12 @@ class DownloadResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-cloud-arrow-down';
     protected static ?int $navigationSort = 3;
+    protected static ?string $navigationGroup = 'Website';
 
 
-    public static function canDelete(Model $record): bool {
+
+    public static function canDelete(Model $record): bool
+    {
         return auth()->user()->hasRole('super_admin') ? true : false;
     }
     public static function canCreate(): bool
@@ -35,7 +38,6 @@ class DownloadResource extends Resource
     public static function canView(Model $record): bool
     {
         return auth()->user()->hasRole('super_admin') ? true : false;
-
     }
     public static function form(Form $form): Form
     {
@@ -56,11 +58,11 @@ class DownloadResource extends Resource
                     ->required(),
             ]);
     }
- 
+
     public static function table(Table $table): Table
     {
         return $table
-      
+
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
@@ -84,14 +86,14 @@ class DownloadResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('download')->icon('heroicon-s-cloud-arrow-down')->color('info')->url(fn ($record) => $record->file_url) // Ambil URL dari kolom "file_url" di rekaman
-                ->openUrlInNewTab(), // Membuka URL di tab baru
+                Tables\Actions\Action::make('download')->icon('heroicon-s-cloud-arrow-down')->color('info')->url(fn($record) => $record->file_url) // Ambil URL dari kolom "file_url" di rekaman
+                    ->openUrlInNewTab(), // Membuka URL di tab baru
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ])->defaultSort('id','desc');
+            ])->defaultSort('id', 'desc');
     }
 
     public static function getRelations(): array
