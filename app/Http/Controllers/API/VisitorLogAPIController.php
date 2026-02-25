@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Flow;
-use App\Models\VisitorLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class VisitorLogAPIController extends Controller
 {
@@ -16,7 +16,7 @@ class VisitorLogAPIController extends Controller
             return response()->json(['error' => 'Flow not found'], 404);
         }
 
-        VisitorLog::create([
+        $logData = [
             'flow_id' => $flow->id,
             'ip' => $request->ip ?? '0.0.0.0',
             'country' => $request->country ?? 'Unknown',
@@ -26,7 +26,12 @@ class VisitorLogAPIController extends Controller
             'user_agent' => $request->user_agent ?? 'Unknown',
             'isp' => $request->isp ?? 'Unknown',
             'reason' => $request->reason ?? 'no reason',
-        ]);
+            'created_at' => now()->toDateTimeString(),
+            'updated_at' => now()->toDateTimeString()
+        ];
+
+        // Push ke Redis List untuk diproses di background worker/job
+        Redis::rpush('visitor_logs_queue', json_encode($logData));
 
         return response()->json(['success' => true]);
     }

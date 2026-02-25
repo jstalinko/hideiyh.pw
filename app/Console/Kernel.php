@@ -15,10 +15,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('traffic:reset-daily')->daily();
-         $schedule->command('traffic:sync')->everyMinute();
-         $schedule->command('subscriptions:notify-ending-soon')->dailyAt('12:00')->withoutOverlapping();
-         $schedule->command('subscriptions:expire')->dailyAt('00:01')->withoutOverlapping();
-         $schedule->command('notifications:send-whatsapp')->dailyAt('13:00')->withoutOverlapping();
+        $schedule->command('traffic:sync')->everyMinute();
+        $schedule->command('subscriptions:notify-ending-soon')->dailyAt('12:00')->withoutOverlapping();
+        $schedule->command('subscriptions:expire')->dailyAt('00:01')->withoutOverlapping();
+        $schedule->command('notifications:send-whatsapp')->dailyAt('13:00')->withoutOverlapping();
+        $schedule->command('visitorlogs:process')->everyMinute();
     }
 
     /**
@@ -26,11 +27,9 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__. '/../JustOrange/Cli');
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/../JustOrange/Cli');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
-
-    
 }
