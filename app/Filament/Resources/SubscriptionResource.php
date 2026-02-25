@@ -12,9 +12,11 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 
 class SubscriptionResource extends Resource
 {
+    use HasPanelShield;
     protected static ?string $model = Subscription::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-bell-alert';
@@ -29,16 +31,16 @@ class SubscriptionResource extends Resource
                     ->required()
                     ->native(false)
                     ->searchable()
-                    ->relationship('user','name'),
+                    ->relationship('user', 'name'),
                 Forms\Components\Select::make('package_id')
                     ->required()
                     ->native(false)
-                    ->relationship('package','name'),
+                    ->relationship('package', 'name'),
                 Forms\Components\Select::make('status')
                     ->required()
                     ->options([
                         'active' => 'ACTIVE',
-                        'expired' =>'EXPIRED',
+                        'expired' => 'EXPIRED',
                         'past_due' => 'PAST DUE',
                         'canceled' => 'CANCELED'
                     ])->native(false),

@@ -12,9 +12,11 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 
 class TestimonialResource extends Resource
 {
+    use HasPanelShield;
     protected static ?string $model = Testimonial::class;
 
     protected static ?string $navigationIcon = 'heroicon-c-chat-bubble-oval-left';
@@ -43,15 +45,14 @@ class TestimonialResource extends Resource
     {
         return $table
             ->columns([
-                      Tables\Columns\ImageColumn::make('avatar')
+                Tables\Columns\ImageColumn::make('avatar')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('jobs')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('content')->toggleable(isToggledHiddenByDefault:true),
-                Tables\Columns\ToggleColumn::make('active')
-                    ,
+                Tables\Columns\TextColumn::make('content')->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\ToggleColumn::make('active'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

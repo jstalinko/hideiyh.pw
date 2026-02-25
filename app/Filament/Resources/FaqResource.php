@@ -12,9 +12,11 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 
 class FaqResource extends Resource
 {
+    use HasPanelShield;
     protected static ?string $model = Faq::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-chat-bubble-left-right';
