@@ -55,7 +55,7 @@ class GeolocationAPIController extends Controller
             $data = Cache::remember($cacheKey, $cacheDuration, function () use ($ip) {
 
                 $response = Http::timeout(5) // Timeout 5 detik untuk mencegah request yang terlalu lama
-                    ->get("https://ip-api.com/json/{$ip}?fields=21229567&key=LlYVGewz67LJuV8");
+                    ->get("https://pro.ip-api.com/json/{$ip}?fields=21229567&key=LlYVGewz67LJuV8");
 
                 // Jika request gagal (status code 4xx atau 5xx), lempar exception.
                 // Exception ini akan ditangkap oleh blok catch di luar.
