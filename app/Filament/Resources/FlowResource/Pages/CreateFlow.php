@@ -5,6 +5,7 @@ namespace App\Filament\Resources\FlowResource\Pages;
 use App\Filament\Resources\FlowResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class CreateFlow extends CreateRecord
@@ -14,6 +15,7 @@ class CreateFlow extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
 
+        $data['user_id'] = Auth::user()->id;
         $data['uniqid'] = Str::uuid()->toString();
 
         return $data;

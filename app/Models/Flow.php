@@ -10,6 +10,7 @@ class Flow extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'uniqid',
         'name',
         'render_white_page',
