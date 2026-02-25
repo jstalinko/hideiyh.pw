@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -53,7 +54,7 @@ class VisitorLogResource extends Resource
             ->when(
                 auth()->user()->hasRole('super_admin'),
                 fn($query) => $query, // No restrictions for admins
-                fn($query) => $query->where('user_id', auth()->id()) // Scope for non-admin users
+                fn($query) => $query->whereHas('flow', fn($q) => $q->where('user_id', auth()->id())) // Scope for non-admin users
             )
             // Additional custom filters
             ->orderByDesc('created_at');
@@ -62,19 +63,19 @@ class VisitorLogResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('flow.name')->label('Flow Name'),
-                Tables\Columns\TextColumn::make('reason')->label('Reason'),
-                Tables\Columns\TextColumn::make('ip')->label('IP Address'),
-                Tables\Columns\TextColumn::make('country')->label('Country'),
-                Tables\Columns\TextColumn::make('device')->label('Device'),
-                Tables\Columns\TextColumn::make('browser')->label('Browser'),
-                Tables\Columns\TextColumn::make('referer')->label('Referer'),
+                Tables\Columns\TextColumn::make('flow.name')->label('Flow Name')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('reason')->label('Reason')->sortable(),
+                Tables\Columns\TextColumn::make('ip')->label('IP Address')->sortable(),
+                Tables\Columns\TextColumn::make('country')->label('Country')->sortable(),
+                Tables\Columns\TextColumn::make('device')->label('Device')->sortable(),
+                Tables\Columns\TextColumn::make('browser')->label('Browser')->sortable(),
+                Tables\Columns\TextColumn::make('referer')->label('Referer')->sortable(),
                 Tables\Columns\TextColumn::make('user_agent')->label('User Agent')->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('isp')->label('ISP'),
                 Tables\Columns\TextColumn::make('created_at')->label('Created At'),
             ])
             ->filters([
-                //
+                SelectFilter::make('name')->label('Flow Name')->relationship('flow', 'name'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

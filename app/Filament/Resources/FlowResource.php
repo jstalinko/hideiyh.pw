@@ -198,6 +198,11 @@ class FlowResource extends Resource
                     ->icon('heroicon-s-arrow-down-circle')
                     ->color('success')
                     ->url(fn(Flow $record): string => '/dl-flow/' . $record->uniqid),
+                Tables\Actions\Action::make('stats')
+                    ->label('Stats')
+                    ->icon('heroicon-s-chart-bar')
+                    ->color('info')
+                    ->url(fn(Flow $record): string => '/dashboard/flows/' . $record->id . '/stats'),
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
@@ -223,6 +228,7 @@ class FlowResource extends Resource
             'view' => Pages\ViewFlow::route('/{record}'),
             'edit' => Pages\EditFlow::route('/{record}/edit'),
             'success' => Pages\SuccessFlow::route('/{record}/success'),
+            'stats' => Pages\FlowStats::route('/{record}/stats'),
         ];
     }
 }
