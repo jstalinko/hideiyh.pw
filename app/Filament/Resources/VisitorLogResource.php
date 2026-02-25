@@ -33,7 +33,16 @@ class VisitorLogResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('flow.name')->label('Flow Name'),
+                Tables\Columns\TextColumn::make('ip')->label('IP Address'),
+                Tables\Columns\TextColumn::make('country')->label('Country'),
+                Tables\Columns\TextColumn::make('device')->label('Device'),
+                Tables\Columns\TextColumn::make('browser')->label('Browser'),
+                Tables\Columns\TextColumn::make('referer')->label('Referer'),
+                Tables\Columns\TextColumn::make('user_agent')->label('User Agent'),
+                Tables\Columns\TextColumn::make('isp')->label('ISP'),
+                Tables\Columns\TextColumn::make('reason')->label('Reason'),
+                Tables\Columns\TextColumn::make('created_at')->label('Created At'),
             ])
             ->filters([
                 //
