@@ -46,7 +46,18 @@ class VisitorLogResource extends Resource
                 //
             ]);
     }
-
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            // Custom filtering conditions
+            ->when(
+                auth()->user()->hasRole('super_admin'),
+                fn($query) => $query, // No restrictions for admins
+                fn($query) => $query->where('user_id', auth()->id()) // Scope for non-admin users
+            )
+            // Additional custom filters
+            ->orderByDesc('created_at');
+    }
     public static function table(Table $table): Table
     {
         return $table

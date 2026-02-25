@@ -20,7 +20,18 @@ class FlowResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-arrows-right-left';
     protected static ?string $navigationGroup = 'Integration';
-
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            // Custom filtering conditions
+            ->when(
+                auth()->user()->hasRole('super_admin'),
+                fn($query) => $query, // No restrictions for admins
+                fn($query) => $query->where('user_id', auth()->id()) // Scope for non-admin users
+            )
+            // Additional custom filters
+            ->orderByDesc('created_at');
+    }
 
     public static function form(Form $form): Form
     {
