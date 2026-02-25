@@ -80,6 +80,19 @@ class UserResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('assign_panel_user_role')->label('Panel User Role')
+                        ->requiresConfirmation()
+                        ->action(function (\Illuminate\Support\Collection $records) {
+                            $role = \Spatie\Permission\Models\Role::where('name', 'panel_user')->first();
+                            if ($role) {
+                                $records->each(function ($record) use ($role) {
+                                    $record->roles()->sync([$role->id]);
+                                });
+                                \Filament\Notifications\Notification::make('success')->title('Successfully')->body('Panel user role assigned automatically')->success()->send();
+                            } else {
+                                \Filament\Notifications\Notification::make('error')->title('Error')->body('Role "panel_user" not found in database!')->danger()->send();
+                            }
+                        }),
                 ]),
                 Tables\Actions\BulkAction::make('add_domain_quota')->label('Add Domain Quota')
                     ->form([
