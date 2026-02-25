@@ -18,7 +18,8 @@
 
             <div class="flex gap-4 p-4 mt-6">
                 <!-- If you want the actions in the center instead of header -->
-                <x-filament::button color="success" icon="heroicon-o-arrow-down-tray" tag="a" href="#">
+                <x-filament::button color="success" icon="heroicon-o-arrow-down-tray" tag="a"
+                    href="/dl-flow/{{ $this->record->uniqid }}">
                     Download
                 </x-filament::button>
 

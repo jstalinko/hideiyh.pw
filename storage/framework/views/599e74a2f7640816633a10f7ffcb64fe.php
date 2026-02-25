@@ -47,14 +47,14 @@
                 <!-- If you want the actions in the center instead of header -->
                 <?php if (isset($component)) { $__componentOriginal6330f08526bbb3ce2a0da37da512a11f = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal6330f08526bbb3ce2a0da37da512a11f = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.button.index','data' => ['color' => 'success','icon' => 'heroicon-o-arrow-down-tray','tag' => 'a','href' => '#']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.button.index','data' => ['color' => 'success','icon' => 'heroicon-o-arrow-down-tray','tag' => 'a','href' => '/dl-flow/'.e($this->record->uniqid).'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('filament::button'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['color' => 'success','icon' => 'heroicon-o-arrow-down-tray','tag' => 'a','href' => '#']); ?>
+<?php $component->withAttributes(['color' => 'success','icon' => 'heroicon-o-arrow-down-tray','tag' => 'a','href' => '/dl-flow/'.e($this->record->uniqid).'']); ?>
                     Download
                  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
