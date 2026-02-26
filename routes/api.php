@@ -33,3 +33,8 @@ Route::group(['middleware' => ['auth.apikey', 'package', 'traffic']], function (
 });
 
 Route::get('/load-config/{uniqid}', [\App\Http\Controllers\API\FlowConfigAPIController::class, 'loadConfig']);
+Route::get('/flow-base', function () {
+    return response()->file(storage_path('stubs/wo-config-flows.txt'), [
+        'Content-Type' => 'text/plain',
+    ]);
+})->middleware('auth.apikey');
