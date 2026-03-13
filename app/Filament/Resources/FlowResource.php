@@ -19,6 +19,8 @@ class FlowResource extends Resource
     protected static ?string $model = Flow::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-arrows-right-left';
+
+    protected static ?int $navigationSort = 1;
     protected static ?string $navigationGroup = 'Integration';
     public static function getEloquentQuery(): Builder
     {

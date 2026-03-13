@@ -227,6 +227,36 @@ const scrollTestimonials = (direction) => {
             <p class="text-gray-400 max-w-2xl mx-auto">Pilih paket yang paling sesuai dengan kebutuhan bisnis Anda.
               Tanpa biaya tersembunyi.</p>
           </div>
+          <!-- tambahkan disini spesial offer today! lifetime subscription packages. -->
+          <div class="mb-12 group cursor-pointer relative z-20">
+            <a href="https://s.id/hideiyh-acs" target="_blank" class="relative block bg-gradient-to-br from-gray-900 to-gray-800 border border-orange-500/30 rounded-2xl overflow-hidden shadow-[0_0_15px_rgba(249,115,22,0.2)] hover:shadow-[0_0_30px_rgba(249,115,22,0.4)] transition-all duration-300 transform hover:-translate-y-1 hover:border-orange-500/60">
+              <!-- Glow background -->
+              <div class="absolute -top-24 -right-24 w-64 h-64 bg-orange-500/10 blur-3xl rounded-full pointer-events-none transition-opacity group-hover:opacity-100 opacity-70"></div>
+              <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-orange-600/10 blur-3xl rounded-full pointer-events-none transition-opacity group-hover:opacity-100 opacity-70"></div>
+              
+              <div class="px-6 py-8 md:px-10 md:py-8 flex flex-col md:flex-row items-center justify-between relative z-10">
+                <div class="text-center md:text-left mb-6 md:mb-0">
+                  <div class="inline-flex items-center bg-orange-500/10 text-orange-400 px-4 py-1.5 rounded-full text-sm font-bold tracking-wider uppercase mb-3 border border-orange-500/20 backdrop-blur-sm">
+                    <span class="animate-pulse mr-2 text-base">🔥</span> Special Offer Today
+                  </div>
+                  <h3 class="text-3xl md:text-4xl font-extrabold text-white mb-3">
+                    Lifetime Subscription Package
+                  </h3>
+                  <p class="text-gray-400 text-lg max-w-xl">
+                    Akses penuh seumur hidup dengan sekali bayar dengan <b class="font-bold italic">UNLIMITED REQUEST/VISITORS</b>! Amankan penawaran eksklusif ini sebelum ditutup.
+                  </p>
+                </div>
+                <div class="flex-shrink-0">
+                  <div class="inline-flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white font-bold py-3.5 px-8 rounded-xl shadow-[0_0_15px_rgba(249,115,22,0.4)] hover:shadow-[0_0_25px_rgba(249,115,22,0.6)] text-lg transition-all">
+                    <span>Lihat Promo Lifetime</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
             <div v-for="plan in pricingPlans" :key="plan.name"
               :class="['bg-gray-800 p-8 rounded-xl border flex flex-col h-full transition-transform', plan.highlighted ? 'border-2 border-orange-500 transform lg:scale-105 shadow-2xl shadow-orange-500/10' : 'border-gray-700']">

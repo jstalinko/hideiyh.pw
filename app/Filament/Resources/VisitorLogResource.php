@@ -19,6 +19,7 @@ class VisitorLogResource extends Resource
 {
     protected static ?string $model = VisitorLog::class;
 
+    protected static ?int $navigationSort = 2;
     protected static ?string $navigationIcon = 'heroicon-s-list-bullet';
 
     protected static ?string $navigationGroup = 'Integration';
