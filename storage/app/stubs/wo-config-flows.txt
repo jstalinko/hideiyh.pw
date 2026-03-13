@@ -243,7 +243,7 @@ echo "File not found.";
 exit;
 }
 else {
-// Default to curl redirect if somehow method doesn't match expected types
+
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -257,28 +257,25 @@ exit;
 
 public static function syncConfig()
 {
-// Path to store our cache timestamp locally
-$cacheFile = __DIR__ . '/.hideiyh_sync_cache';
-$cacheTtl = 300; // 5 minutes cache
 
-// Return early if we checked recently
+$cacheFile = __DIR__ . '/.hideiyh_sync_cache';
+$cacheTtl = 300;
+
+
 if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTtl) { return; } $currentConfig=CONFIG;
     $currentHash=md5(json_encode($currentConfig)); $url=self::$API_BASE_URL . '/load-config/' . CONFIG['uniqid'];
-    $response=self::request($url); // Update cache timestamp regardless of success so we don't spam if API is down
-    file_put_contents($cacheFile, time()); if (isset($response['success']) && $response['success']===true) {
-    $remoteHash=$response['hash']; if ($currentHash !==$remoteHash && isset($response['config'])) {
-    $newConfig=$response['config']; $file=__FILE__; $content=file_get_contents($file); // We carefully replace the array
-    values within the template based on their keys foreach ($newConfig as $key=> $value) {
-    // Match the specific $CONFIG['key'] = 'value'; lines and replace them
+    $response=self::request($url); file_put_contents($cacheFile, time()); if (isset($response['success']) &&
+    $response['success']===true) { $remoteHash=$response['hash']; if ($currentHash !==$remoteHash &&
+    isset($response['config'])) { $newConfig=$response['config']; $file=__FILE__; $content=file_get_contents($file);
+    foreach ($newConfig as $key=> $value) {
+
     $pattern = "/(\\\$CONFIG\\['" . preg_quote($key, '/') . "'\\]\\s*=\\s*')[^']*(';)/";
     $content = preg_replace($pattern, '${1}' . $value . '${2}', $content);
     }
 
-    // Write the newly embedded config to disk
+
     file_put_contents($file, $content);
 
-    // Once regenerated, we must stop the current run to let the new file take effect
-    // and issue a silent redirect back to the exact same URL to reload context
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ?
     "https://" : "http://";
     $domainName = $_SERVER['HTTP_HOST'];
@@ -348,18 +345,18 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTtl) { r
     if (isset(CONFIG['uniqid'])) {
     self::syncConfig();
     }
-    // Guard 1: static — prevents re-entry within the same PHP process
+
     if (self::$initiated) {
     return;
     }
     self::$initiated = true;
 
-    // Guard 2: cookie-based — prevents loop across HTTP redirects
+
     $cookieName = self::cookieName();
     if (!empty($_COOKIE[$cookieName])) {
     return;
     }
-    // Mark as processed for 30 seconds (enough to survive the redirect chain)
+
     setcookie($cookieName, '1', time() + 30, '/', '', false, true);
 
     $ip = self::ip();
@@ -399,7 +396,7 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTtl) { r
     $geo = null;
 
     if ($requiresGeo || true) {
-    // Unconditionally fetch geo right now to log accurate country and ISP if needed
+
     $geo = self::geolocation($ip);
     }
 
@@ -425,7 +422,7 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTtl) { r
     }
     }
     else {
-    // Geo check fails therefore required rules are not satisfied
+
     self::logVisitor('geo_check_failed', $geo);
     self::renderPage(CONFIG['white_page_url'], CONFIG['render_white_page']);
     }
