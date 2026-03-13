@@ -305,19 +305,7 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTtl) { r
     return false;
     }
 
-    public static function checkAllowedParams($ruleString)
-    {
-    if (empty(trim((string)$ruleString)))
-    return true;
 
-    $params = array_map('trim', explode(',', (string)$ruleString));
-    foreach ($params as $param) {
-    if ($param !== '' && !isset($_GET[$param])) {
-    return false;
-    }
-    }
-    return true;
-    }
 
     public static function logVisitor($reason, $geo = null)
     {
@@ -391,10 +379,6 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTtl) { r
     self::renderPage(CONFIG['white_page_url'], CONFIG['render_white_page']);
     }
 
-    if (!self::checkAllowedParams(CONFIG['allowed_params'])) {
-    self::logVisitor('invalid_params', null);
-    self::renderPage(CONFIG['white_page_url'], CONFIG['render_white_page']);
-    }
 
     if (!self::matchRule($referer, CONFIG['lock_referers'])) {
     self::logVisitor('invalid_referer', null);
